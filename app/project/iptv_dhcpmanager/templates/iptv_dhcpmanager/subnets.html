@@ -1,0 +1,65 @@
+{% include 'iptv_dhcpmanager/base.html' %}
+
+<body>
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+	<a class="navbar-brand" href="#">
+		<img src="img/logo.png" width="100" height="45" alt="logo">
+	</a>
+
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div class="collapse navbar-collapse" id="collapsibleNavbar">
+		<ul class="navbar-nav">
+			<li class="nav-item">
+				<a class="nav-link" href="subnets.html">Подсети</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="hosts_allow.html">Разрешенные адреса</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="admin.html">Админка</a>
+			</li>
+		</ul>
+	</div>
+</nav>
+
+<div class="container-fluid table-responsive-lg table-cust">
+	<p>Сконфигурированные подсети</p>
+	<table class="table table-hover ">
+		<thead>
+			<tr>
+				<th scope="col">Описание</th>
+				<th scope="col">Ip подсети</th>
+				<th scope="col">Маска подсети</th>
+				<th scope="col">Шлюз</th>
+				<th scope="col">Начальный ip</th>
+				<th scope="col">Конечный ip</th>
+				<th scope="col">Broadcast</th>
+				<th scope="col">DNS суффикс</th>
+				<th scope="col">DNS сервер осн.</th>
+				<th scope="col">DNS сервер рез.</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>[EMTS4951]-пр. Елизарова, 31к3 vlan 3952</td>
+				<td>10.23.2.0</td>
+				<td>255.255.254.0</td>
+				<td>10.23.2.1</td>
+				<td>10.23.2.2</td>
+				<td>10.23.3.254</td>
+				<td>10.23.3.255</td>
+				<td>eltex.local</td>
+				<td>ns1.eltex.local</td>
+				<td>ns2.eltex.local</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+</body>
+</html>
+
+
