@@ -2,3 +2,6 @@ venv
 run
 __pycache__
 settings.py
+*.swp
+*.pyc
+*.pyo

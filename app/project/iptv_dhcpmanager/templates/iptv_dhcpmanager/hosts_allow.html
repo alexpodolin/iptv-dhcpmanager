@@ -1,9 +1,11 @@
 {% include 'iptv_dhcpmanager/base.html' %}
+{% load static %}
+
 
 <body>
 <nav class="navbar navbar-expand-md navbar-light bg-light">
 	<a class="navbar-brand" href="#">
-		<img src="img/logo.png" width="100" height="45" alt="logo">
+		<img src="{% static 'img/logo.png' %}" width="100" height="45" alt="logo">
 	</a>
 
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -13,14 +15,17 @@
 	<div class="collapse navbar-collapse" id="collapsibleNavbar">
 		<ul class="navbar-nav">
 			<li class="nav-item">
-				<a class="nav-link" href="subnets.html">Подсети</a>
+				<a class="nav-link" href="/subnets/">Подсети</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="hosts_allow.html">Разрешенные адреса</a>
+				<a class="nav-link" href="/hosts-allow/">Разрешенные адреса</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="admin.html">Админка</a>
+				<a class="nav-link" href="/admin/">Админка</a>
 			</li>
+			<li class="nav-item">
+                <a class="nav-link" href="/">Выход</a>
+            </li>
 		</ul>
 	</div>
 </nav>

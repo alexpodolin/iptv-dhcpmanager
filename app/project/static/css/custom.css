@@ -6,13 +6,21 @@
 	border: 1px solid #ced4da;
     border-radius: 0.25rem;
 }
-
-.form__legend {
+.form-legend {
 	font-size: 1.5rem;
+}
+.login-err-msg {
+	display: flex;
+	color: red;
+    list-style-type: none;
+    padding: 0;
+    margin: -3% 0 1% 0;
+    text-align: center;
 }
 .table-cust {
 	margin: 2% 0 0 0;
 }
+
 
 @media (max-width: 991.98px) { 
 	.form-login-cust {
