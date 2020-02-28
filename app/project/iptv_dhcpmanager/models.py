@@ -1,30 +1,29 @@
 from django.db import models
 
-# Create your models here.
-
 class Subnets(models.Model):
-	description = models.CharField(max_length=150)
-	ip_subnet = models.GenericIPAddressField(protocol='IPv4', blank=False)
-	mask_subnet = models.GenericIPAddressField(protocol='IPv4', blank=False)
-	gw_subnet = models.GenericIPAddressField(protocol='IPv4', blank=False)
-	ip_start = models.GenericIPAddressField(protocol='IPv4', blank=False)
-	ip_end = models.GenericIPAddressField(protocol='IPv4', blank=False)
-	ip_broadcast = models.GenericIPAddressField(protocol='IPv4', blank=False)
-	dns_prefix = models.CharField(max_length=30, default='eltex.local')
-	dns_main = models.GenericIPAddressField(protocol='IPv4', default='10.22.0.3', blank=False)
-	dns_res = models.GenericIPAddressField(protocol='IPv4', default='')
+	class Meta:
+		verbose_name = '\"Подсеть\"'
+		verbose_name_plural = 'Подсети'
 
-	def __str__(self):
-		return '{}'.format(self.title)
+	description = models.CharField(max_length=100, verbose_name='Описание')
+	ip_subnet = models.GenericIPAddressField(protocol='IPv4', blank=False, verbose_name='Описание')
+	mask_subnet = models.GenericIPAddressField(protocol='IPv4', blank=False, verbose_name='ip адрес')
+	gw_subnet = models.GenericIPAddressField(protocol='IPv4', blank=False, verbose_name='Маска Подсети')	
+	ip_broadcast = models.GenericIPAddressField(protocol='IPv4', blank=False, verbose_name='Широковещательный адрес')
+	ip_start = models.GenericIPAddressField(protocol='IPv4', blank=False, verbose_name='ip начальный')
+	ip_end = models.GenericIPAddressField(protocol='IPv4', blank=False, verbose_name='ip конечный')
+	dns_prefix = models.CharField(max_length=30, default='eltex.local', verbose_name='dns префикс')
+	dns_main = models.GenericIPAddressField(protocol='IPv4', default='10.22.0.3', blank=False, verbose_name='Осн. dns сервер')
+	dns_res = models.GenericIPAddressField(protocol='IPv4', blank=True, null=True, verbose_name='Резерв. dns сервер')
 
 class Hosts_Allow(models.Model):
-	hostname = models.CharField(max_length=30, blank=False)
-	mac_addr = models.CharField(max_length=17, blank=False)
-	ip_addr = models.GenericIPAddressField(protocol='IPv4', blank=False)
-	description = models.CharField(max_length=150)
+	class Meta:
+		verbose_name = '\"Доступные/Зарезервированные ip\"'
+		verbose_name_plural = 'Доступные/Зарезервированные ip'
 
-	def __str__(self):
-		return '{}'.format(self.title)
-		
+	hostname = models.CharField(max_length=30, blank=False, verbose_name='Имя хоста')
+	mac_addr = models.CharField(max_length=17, blank=False, verbose_name='mac адрес')
+	ip_addr = models.GenericIPAddressField(protocol='IPv4', blank=False, verbose_name='ip адрес')
+	description = models.CharField(max_length=100, verbose_name='Описание')
 
 		
