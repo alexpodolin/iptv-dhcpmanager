@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
+from django.template import loader
 
+from .models import Subnets, Hosts_Allow
 import ldap3
 
 def index(request):
@@ -13,11 +15,21 @@ def login(request):
 
 def subnets(request):
 	'''Просмотр доступных подсетей'''
-	return render(request,'iptv_dhcpmanager/subnets.html')
+	subnets_list = Subnets.objects.all()
+	template = loader.get_template('iptv_dhcpmanager/subnets.html')
+	context = {
+        'subnets_list': subnets_list,
+    }
+	return HttpResponse(template.render(context, request))
 
 def hosts_allow(request):
 	'''Просмотр список зарезервированных ip адресов'''
-	return render(request,'iptv_dhcpmanager/hosts_allow.html')
+	hosts_allow = Hosts_Allow.objects.all()
+	template = loader.get_template('iptv_dhcpmanager/hosts_allow.html')
+	context = {
+		'hosts_allow': hosts_allow
+	}
+	return HttpResponse(template.render(context, request))
 
 def checkConnLDAP(username, password):
 	'''Соединимся с LDAP'''
@@ -36,7 +48,6 @@ def auth(request):
 		password = request.POST['form-passwd']
 
 		if checkConnLDAP(login, password):
-#			return render(request, 'iptv_dhcpmanager/subnets.html')
 			return subnets(request)
 		else:
 			errors.append('Некорректный логин или пароль')

@@ -6,9 +6,9 @@ class Subnets(models.Model):
 		verbose_name_plural = 'Подсети'
 
 	description = models.CharField(max_length=100, verbose_name='Описание')
-	ip_subnet = models.GenericIPAddressField(protocol='IPv4', blank=False, verbose_name='Описание')
-	mask_subnet = models.GenericIPAddressField(protocol='IPv4', blank=False, verbose_name='ip адрес')
-	gw_subnet = models.GenericIPAddressField(protocol='IPv4', blank=False, verbose_name='Маска Подсети')	
+	ip_subnet = models.GenericIPAddressField(protocol='IPv4', blank=False, verbose_name='ip подсети')
+	mask_subnet = models.GenericIPAddressField(protocol='IPv4', blank=False, verbose_name='Маска Подсети')
+	gw_subnet = models.GenericIPAddressField(protocol='IPv4', blank=False, verbose_name='ip шлюза')	
 	ip_broadcast = models.GenericIPAddressField(protocol='IPv4', blank=False, verbose_name='Широковещательный адрес')
 	ip_start = models.GenericIPAddressField(protocol='IPv4', blank=False, verbose_name='ip начальный')
 	ip_end = models.GenericIPAddressField(protocol='IPv4', blank=False, verbose_name='ip конечный')

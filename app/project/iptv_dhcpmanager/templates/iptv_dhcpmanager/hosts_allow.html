@@ -31,8 +31,12 @@
 </nav>
 
 <div class="container-fluid table-responsive-lg table-cust">
-	<p>Доступные/Разрешенные хосты</p>
-	<table class="table table-hover ">
+	<div class="d-flex flex-row justify-content-between">
+		<p>Доступные/Разрешенные хосты</p>
+		<button type="button" class="btn btn-light btn-sm">Сгенерировать конфиг</button>
+	</div>
+
+	<table class="table table-hover table-cust">
 		<thead>
 			<tr>
 				<th scope="col">Имя хоста</th>
@@ -42,12 +46,14 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>SB26002643</td>
-				<td>E0:D9:E3:97:05:AB</td>
-				<td>10.23.2.2</td>
-				<td>что-то в Невской ратуше</td>
-			</tr>
+			{% for host in hosts_allow %}
+				<tr>
+					<td scope="col">{{ host.hostname}}</td>
+					<td scope="col">{{ host.mac_addr}}</td>
+					<td scope="col">{{ host.ip_addr}}</td>
+					<td scope="col">{{ host.description | default_if_none:""}}</td>
+				</tr>
+			{% endfor %}
 		</tbody>
 	</table>
 </div>
