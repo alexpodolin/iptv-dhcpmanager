@@ -9,27 +9,29 @@ def index(request):
 	'''Стартовая страница'''
 	return render(request, 'iptv_dhcpmanager/login.html')
 
-def login(request):
-	'''Вход в систему'''
-	return render(request,'iptv_dhcpmanager/login.html')
-
 def subnets(request):
 	'''Просмотр доступных подсетей'''
-	subnets_list = Subnets.objects.all()
-	template = loader.get_template('iptv_dhcpmanager/subnets.html')
-	context = {
-        'subnets_list': subnets_list,
-    }
-	return HttpResponse(template.render(context, request))
+	if not request.session.get('login'):
+		return redirect('/')
+	else:
+		subnets_list = Subnets.objects.all()
+		template = loader.get_template('iptv_dhcpmanager/subnets.html')
+		context = {
+        	'subnets_list': subnets_list,
+    	}
+		return HttpResponse(template.render(context, request))
 
 def hosts_allow(request):
 	'''Просмотр список зарезервированных ip адресов'''
-	hosts_allow = Hosts_Allow.objects.all()
-	template = loader.get_template('iptv_dhcpmanager/hosts_allow.html')
-	context = {
-		'hosts_allow': hosts_allow
-	}
-	return HttpResponse(template.render(context, request))
+	if not request.session.get('login'):
+		return redirect('/')
+	else:
+		hosts_allow = Hosts_Allow.objects.all()
+		template = loader.get_template('iptv_dhcpmanager/hosts_allow.html')
+		context = {
+			'hosts_allow': hosts_allow
+		}
+		return HttpResponse(template.render(context, request))
 
 def checkConnLDAP(username, password):
 	'''Соединимся с LDAP'''
@@ -48,7 +50,22 @@ def auth(request):
 		password = request.POST['form-passwd']
 
 		if checkConnLDAP(login, password):
-			return subnets(request)
+			request.session['login'] = login
+			request.session.set_expiry(300)
+			return redirect('/subnets/')
+			#return subnets(request)
 		else:
 			errors.append('Некорректный логин или пароль')
 			return render(request, 'iptv_dhcpmanager/login.html', {'errors': errors})
+
+def logout(request):
+    '''Выход пользователя'''
+    try:
+        del request.session['username']
+    except:
+        pass
+    return index(request)
+
+
+# def genSubnets(request):
+# 	return redirect('http://www.sats.spb.ru/')

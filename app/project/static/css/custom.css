@@ -20,7 +20,18 @@
 .table-cust {
 	margin: 1% 0 0 0;
 }
-
+/*.cust-btn-genconf {
+	display: block;
+    float: left;
+    padding: 3px 12px;
+    background: #999;
+    font-weight: 400;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #fff;
+    border-radius: 15px;
+}*/
 
 @media (max-width: 991.98px) { 
 	.form-login-cust {

@@ -1,10 +1,9 @@
 {% include 'iptv_dhcpmanager/base.html' %}
 {% load static %}
 
-
 <body>
 <nav class="navbar navbar-expand-md navbar-light bg-light">
-	<a class="navbar-brand" href="#">
+	<a class="navbar-brand" href="http://www.sats.spb.ru">
 		<img src="{% static 'img/logo.png' %}" width="100" height="45" alt="logo">
 	</a>
 
@@ -15,26 +14,26 @@
 	<div class="collapse navbar-collapse" id="collapsibleNavbar">
 		<ul class="navbar-nav">
 			<li class="nav-item">
-				<a class="nav-link" href="/subnets/">Подсети</a>
+				<a class="nav-link" href="{% url 'subnets' %}">Подсети</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="/hosts-allow/">Разрешенные адреса</a>
+				<a class="nav-link" href="{% url 'hosts_allow' %}">Разрешенные адреса</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="/admin/">Админка</a>
 			</li>
 			<li class="nav-item">
-                <a class="nav-link" href="/">Выход</a>
+                <a class="nav-link" href="{% url 'logout' %}">Выход</a>
             </li>
 		</ul>
 	</div>
 </nav>
 
 <div class="container-fluid table-responsive-lg table-cust">
-	<div class="d-flex flex-row justify-content-between">
+	<!-- <div class="d-flex flex-row justify-content-between">
 		<p>Доступные/Разрешенные хосты</p>
 		<button type="button" class="btn btn-light btn-sm">Сгенерировать конфиг</button>
-	</div>
+	</div> -->
 
 	<table class="table table-hover table-cust">
 		<thead>
