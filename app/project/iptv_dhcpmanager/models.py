@@ -1,3 +1,5 @@
+from macaddress.fields import MACAddressField
+
 from django.db import models
 
 class Subnets(models.Model):
@@ -22,7 +24,8 @@ class Hosts_Allow(models.Model):
 		verbose_name_plural = 'Доступные/Зарезервированные ip'
 
 	hostname = models.CharField(max_length=30, blank=False, verbose_name='Имя хоста')
-	mac_addr = models.CharField(max_length=17, blank=False, verbose_name='mac адрес')
+	#mac_addr = models.CharField(max_length=17, blank=False, verbose_name='mac адрес')
+	mac_addr = MACAddressField(max_length=17, blank=False, verbose_name='mac адрес')
 	ip_addr = models.GenericIPAddressField(protocol='IPv4', blank=False, verbose_name='ip адрес')
 	description = models.CharField(max_length=100, verbose_name='Описание')
 
