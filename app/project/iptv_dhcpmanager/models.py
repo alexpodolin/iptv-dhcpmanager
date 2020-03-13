@@ -28,5 +28,3 @@ class Hosts_Allow(models.Model):
 	mac_addr = MACAddressField(max_length=17, blank=False, verbose_name='mac адрес')
 	ip_addr = models.GenericIPAddressField(protocol='IPv4', blank=False, verbose_name='ip адрес')
 	description = models.CharField(max_length=100, verbose_name='Описание')
-
-		

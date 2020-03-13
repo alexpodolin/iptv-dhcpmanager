@@ -1,0 +1,13 @@
+{% extends "admin/change_list.html" %}
+{% load i18n admin_urls static admin_list %}
+
+{% block object-tools %}
+  <form action="/upload_csv/" method="POST" enctype="multipart/form-data" accept-charset="utf-8">
+    {% csrf_token %}
+      <label for="csv_file">Экспорт csv файла</label>
+        <input type="file" id="csv_file" name="csv_file">
+      {# <small>Только csv файлы</small> #}
+    <button type="submit" class="cust-admin-btn" title="Загрузить csv файл">Загрузить</button>
+    </form>
+  {{ block.super }}
+{% endblock %}

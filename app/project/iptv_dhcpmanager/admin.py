@@ -51,6 +51,7 @@ class AdminSubnet(admin.ModelAdmin):
 	
 
 class AdminHosts_Allow(admin.ModelAdmin):
+	change_form = "hosts_allow/change_list.html"
 	list_display = ('hostname', 'mac_addr', 'ip_addr', 'description')
 	actions = ['genHostAllow']
 	

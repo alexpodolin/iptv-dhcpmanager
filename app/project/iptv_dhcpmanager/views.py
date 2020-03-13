@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
-
+from django.contrib import messages
 from .models import Subnets, Hosts_Allow
+
 import ldap3
+import csv
+import io
 
 def index(request):
 	'''Стартовая страница'''
@@ -67,5 +70,10 @@ def logout(request):
     return index(request)
 
 
-# def genSubnets(request):
-# 	return redirect('http://www.sats.spb.ru/')
+#def handle_upload_file(file):
+
+
+def upload_csv(request):
+	'''массовая загрузка hosts allow из csv'''
+	return render(request)
+
