@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Subnets, Hosts_Allow
+
 import shutil
 import subprocess
 import os
@@ -72,5 +73,3 @@ class AdminHosts_Allow(admin.ModelAdmin):
 
 admin.site.register(Subnets, AdminSubnet)
 admin.site.register(Hosts_Allow, AdminHosts_Allow)
-
-

@@ -7,5 +7,5 @@ urlpatterns = [
     path('subnets/', views.subnets, name='subnets'),
     path('hosts-allow/', views.hosts_allow, name='hosts_allow'),
     path('auth/', views.auth, name='auth'),
-    path('upload_csv/', views.upload_csv, name="upload_csv"),
+    path('upload_csv/', views.upload_csv, name='upload_csv'),
 ]

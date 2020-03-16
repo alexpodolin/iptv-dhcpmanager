@@ -2,11 +2,13 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.contrib import messages
+
+from django.core.files.storage import FileSystemStorage
+
 from .models import Subnets, Hosts_Allow
 
 import ldap3
 import csv
-import io
 
 def index(request):
 	'''Стартовая страница'''
@@ -69,11 +71,15 @@ def logout(request):
         pass
     return index(request)
 
-
-#def handle_upload_file(file):
-
-
 def upload_csv(request):
-	'''массовая загрузка hosts allow из csv'''
-	return render(request)
+	if request.method == 'POST' and request.FILES['csv_file']:
+		csv_file = request.FILES['csv_file']
+		fs = FileSystemStorage()
+		filename = fs.save(csv_file.name, csv_file)
+		uploaded_file_url = fs.url(filename)
+		#return render(request, 'admin/iptv_dhcpmanager/hosts_allow/change_list.html', {'uploaded_file_url': uploaded_file_url})
+		return redirect('/admin/iptv_dhcpmanager/hosts_allow/')
+	#return render(request, 'admin/iptv_dhcpmanager/hosts_allow/change_list.html')
+	return redirect('/admin/iptv_dhcpmanager/hosts_allow/')
+
 

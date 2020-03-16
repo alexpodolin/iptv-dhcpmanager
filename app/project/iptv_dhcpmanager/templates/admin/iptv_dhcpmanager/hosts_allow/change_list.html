@@ -2,12 +2,14 @@
 {% load i18n admin_urls static admin_list %}
 
 {% block object-tools %}
-  <form action="/upload_csv/" method="POST" enctype="multipart/form-data" accept-charset="utf-8">
+  {# <form action="{% url 'upload_csv'  %}" method="POST" enctype="multipart/form-data"> #}
+  <form action="/upload_csv/" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-      <label for="csv_file">Экспорт csv файла</label>
-        <input type="file" id="csv_file" name="csv_file">
+      <label for="csv_file">Импорт csv файла</label>
+        <input type="file" name="csv_file">
       {# <small>Только csv файлы</small> #}
     <button type="submit" class="cust-admin-btn" title="Загрузить csv файл">Загрузить</button>
     </form>
+
   {{ block.super }}
 {% endblock %}
