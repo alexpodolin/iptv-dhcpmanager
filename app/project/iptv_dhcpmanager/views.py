@@ -45,10 +45,13 @@ def hosts_allow(request):
 			# Если страница выходит за пределы диапазона (напр. 9999), покажем последнюю страницу.
 			hosts_allow = paginator.page(paginator.num_pages)
 
+		hosts_allow_count = Hosts_Allow.objects.count()
+
 		template = loader.get_template('iptv_dhcpmanager/hosts_allow.html')
 		context = {
 			'hosts_allow': hosts_allow,
 			'paginator': paginator,
+			'hosts_allow_count': hosts_allow_count,
 		}
 		return HttpResponse(template.render(context, request))
 		#return render(request,'iptv_dhcpmanager/hosts_allow.html', context)
