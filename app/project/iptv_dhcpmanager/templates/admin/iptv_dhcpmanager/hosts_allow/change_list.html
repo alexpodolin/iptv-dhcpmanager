@@ -11,5 +11,13 @@
     <button type="submit" class="cust-admin-btn" title="Загрузить csv файл">Загрузить</button>
     </form>
 
+  <form action="/generate_allowed_hosts/" method="POST" enctype="multipart/form-data" class="cust_add-form">
+    {% csrf_token %}
+      {# <label for="gen_conf_file"></label>#}
+       {#<input type="submit" name="gen_conf_file">   #}
+      	{#<small>Формат файла: hostname;mac_addr;ip_addr;description</small> #}
+    <button type="submit" class="cust-admin-btn" title="Генерация списка разрешенных хостов">Сгенерировать список разрешенных хостов</button>
+    </form>
+
   {{ block.super }}
 {% endblock %}

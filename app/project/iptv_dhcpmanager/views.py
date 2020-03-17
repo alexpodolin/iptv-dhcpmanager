@@ -9,8 +9,10 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Subnets, Hosts_Allow
 
 import ldap3
-import io
+import os
 import csv
+import shutil
+import subprocess
 
 def index(request):
 	'''Стартовая страница'''
@@ -27,6 +29,7 @@ def subnets(request):
         	'subnets_list': subnets_list,
     	}
 		return HttpResponse(template.render(context, request))
+
 def hosts_allow(request):
 	'''Просмотр список зарезервированных ip адресов'''
 	if not request.session.get('login'):
@@ -91,27 +94,15 @@ def logout(request):
 
 def hadle_csv_file(file):
 	'''Парсинг csv файла'''	
-
 	for row in file:		
 		row = row.decode(encoding='utf-8', errors='strict')
 		row = row.split(';')
-		#if row[0] != 'hostname':
 		_, h_allow = Hosts_Allow.objects.update_or_create(
 		hostname = row[0],
 		mac_addr = row[1],
 		ip_addr = row[2],
 		description = row[3]
 		)
-
-	##data = csv.reader(open(file), delimiter=';')
-	# for row in file:
-	# 	if row[0] != 'hostname':			
-	# 		h_allow = Hosts_Allow()
-	# 		h_allow.hostname = str(row[0])
-	# 		h_allow.mac_addr =  row[1]
-	# 		h_allow.ip_addr = row[2]
-	# 		h_allow.description = row[3]
-	# 		h_allow.save()
 
 def upload_csv(request):
 	'''Сохранение загруженного файла'''
@@ -124,4 +115,61 @@ def upload_csv(request):
 		#return render(request, 'admin/iptv_dhcpmanager/hosts_allow/change_list.html', {'uploaded_file_url': uploaded_file_url})
 		return redirect('/admin/iptv_dhcpmanager/hosts_allow/')
 	#return render(request, 'admin/iptv_dhcpmanager/hosts_allow/change_list.html')
+	return redirect('/admin/iptv_dhcpmanager/hosts_allow/')
+
+conf_dir = '/tmp'
+
+def restart_dhcpd(conf_path, conf_path_bkp):
+	'''Перезапуск серввиса'''
+	cmd = '/usr/bin/systemctl restart dhcpd'
+	retcode = subprocess.call(cmd, shell=True)
+	if retcode == 0:
+		os.remove(conf_path_bkp)
+	else:
+		shutil.copy2(conf_path_bkp, conf_path)
+		subprocess.call(cmd, shell=True)
+		os.remove(conf_path_bkp)
+
+def generate_subnets(request):
+	'''Гененрация файла с конфигурацией подсети'''
+	conf_path = os.path.join(conf_dir, 'subnets.conf')
+	conf_path_bkp = os.path.join(conf_dir, 'subnets.conf.bkp')
+	shutil.copy2(conf_path, conf_path_bkp)
+
+	subnets_list = Subnets.objects.all()
+
+	with open(conf_path, 'w+') as result:
+		for item in subnets_list:
+			result.write('# ' + item.description + '\n')
+			result.write('subnet ' + item.ip_subnet + \
+						' netmask ' + item.mask_subnet + ' {' + '\n')
+			result.write('  option routers\t\t' + item.gw_subnet + ';' +'\n')
+			result.write('  option subnet-mask\t\t' + item.ip_subnet + ';' +'\n')
+			result.write('  option broadcast-address\t' + item.ip_broadcast + ';' +'\n')
+			result.write('  option domain-name\t\t"' + item.dns_prefix +'"' + ';' +'\n')
+			if item.dns_res == None:
+				item.dns_res = ''
+			result.write('  option domain-name-servers\t' + item.dns_main + item.dns_res + ';' +'\n'*2)
+			result.write('  pool {' + '\n')
+			result.write('    deny\tunknown-clients;' + '\n')
+			result.write('    range\t' + item.ip_start + ' ' + item.ip_end + '\n')
+			result.write('  }' + '\n')
+			result.write('}' + '\n'*2)
+	restart_dhcpd(conf_path, conf_path_bkp)	
+	return redirect('/admin/iptv_dhcpmanager/subnets/')
+
+def generate_allowed_hosts(request):	
+	'''Гененрация файла с конфигурацией хоста'''
+	conf_path = os.path.join(conf_dir, 'hosts_allow.conf')
+	conf_path_bkp = os.path.join(conf_dir, 'hosts_allow.conf.bkp')
+	shutil.copy2(conf_path, conf_path_bkp)
+
+	hosts_allow = Hosts_Allow.objects.all()
+
+	with open('/tmp/hosts_allow.conf', 'w+') as result:
+		for item in hosts_allow:
+			result.write('host ' + str(item.hostname) + \
+				' { hardware ethernet ' + str(item.mac_addr) + ';' \
+				' fixed-address ' + str(item.ip_addr) + '; }' + '\n')
+	restart_dhcpd(conf_path, conf_path_bkp)
 	return redirect('/admin/iptv_dhcpmanager/hosts_allow/')
