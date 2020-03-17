@@ -20,7 +20,13 @@
 .table-cust {
 	margin: 1% 0 0 0;
 }
-
+.cust-pagination {
+	margin: 1rem auto;
+}
+.cust-step-links {
+	display: block;
+	margin: 0 auto;
+}
 @media (max-width: 991.98px) { 
 	.form-login-cust {
 		margin: 1rem auto;
