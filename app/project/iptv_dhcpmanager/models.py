@@ -1,6 +1,7 @@
-from macaddress.fields import MACAddressField
-
+from django.conf import settings
 from django.db import models
+
+from macaddress.fields import MACAddressField
 
 class Subnets(models.Model):
 	class Meta:
@@ -20,6 +21,7 @@ class Subnets(models.Model):
 
 	def __str__(self):
 		return 'description: ' + self.description
+
 
 class Hosts_Allow(models.Model):
 	class Meta:

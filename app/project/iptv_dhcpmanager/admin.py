@@ -6,6 +6,12 @@ class AdminSubnet(admin.ModelAdmin):
 	list_display = ('description', 'ip_subnet', 'mask_subnet', 'gw_subnet', \
 					'ip_broadcast', 'ip_start', 'ip_end', 'dns_prefix', 'dns_main', 'dns_res' )
 	#actions = ['genSubnet']
+
+	class Media:
+		css = {
+			'all': ('admin/cust-css/cust-css.css',)
+		}
+	
 	
 	# def genSubnet(ModelAdmin, request, queryset):
 	# 	'''Гененрация файла с конфигурацией подсети'''
@@ -38,6 +44,11 @@ class AdminHosts_Allow(admin.ModelAdmin):
 	change_form = "hosts_allow/change_list.html"
 	list_display = ('hostname', 'mac_addr', 'ip_addr', 'description')
 	#actions = ['genHostAllow']
+
+	class Media:
+		css = {
+			'all': ('admin/cust-css/cust-css.css',)
+		}
 	
 
 	# def genHostAllow(ModelAdmin, request, queryset):

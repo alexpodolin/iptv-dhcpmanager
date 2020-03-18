@@ -117,7 +117,7 @@ def upload_csv(request):
 	#return render(request, 'admin/iptv_dhcpmanager/hosts_allow/change_list.html')
 	return redirect('/admin/iptv_dhcpmanager/hosts_allow/')
 
-conf_dir = '/tmp'
+conf_dir = '/etc/dhcp/'
 
 def restart_dhcpd(conf_path, conf_path_bkp):
 	'''Перезапуск серввиса'''
@@ -152,7 +152,7 @@ def generate_subnets(request):
 			result.write('  option domain-name-servers\t' + item.dns_main + item.dns_res + ';' +'\n'*2)
 			result.write('  pool {' + '\n')
 			result.write('    deny\tunknown-clients;' + '\n')
-			result.write('    range\t' + item.ip_start + ' ' + item.ip_end + '\n')
+			result.write('    range\t' + item.ip_start + ' ' + item.ip_end + ';' +'\n')
 			result.write('  }' + '\n')
 			result.write('}' + '\n'*2)
 	restart_dhcpd(conf_path, conf_path_bkp)	
@@ -166,7 +166,7 @@ def generate_allowed_hosts(request):
 
 	hosts_allow = Hosts_Allow.objects.all()
 
-	with open('/tmp/hosts_allow.conf', 'w+') as result:
+	with open(conf_path, 'w+') as result:
 		for item in hosts_allow:
 			result.write('host ' + str(item.hostname) + \
 				' { hardware ethernet ' + str(item.mac_addr) + ';' \
