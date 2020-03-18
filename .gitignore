@@ -1,9 +1,9 @@
 venv
 run
+uwsgi.ini
+requirements.txt 
 __pycache__
 settings.py
 *.swp
 *.pyc
 *.pyo
-uwsgi.ini
-requirements.txt
