@@ -5,3 +5,5 @@ settings.py
 *.swp
 *.pyc
 *.pyo
+uwsgi.ini
+requirements.txt
