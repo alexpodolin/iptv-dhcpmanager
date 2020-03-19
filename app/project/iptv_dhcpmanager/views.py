@@ -144,7 +144,7 @@ def generate_subnets(request):
 			result.write('subnet ' + item.ip_subnet + \
 						' netmask ' + item.mask_subnet + ' {' + '\n')
 			result.write('  option routers\t\t' + item.gw_subnet + ';' +'\n')
-			result.write('  option subnet-mask\t\t' + item.ip_subnet + ';' +'\n')
+			result.write('  option subnet-mask\t\t' + item.mask_subnet + ';' +'\n')
 			result.write('  option broadcast-address\t' + item.ip_broadcast + ';' +'\n')
 			result.write('  option domain-name\t\t"' + item.dns_prefix +'"' + ';' +'\n')
 			if item.dns_res == None:
