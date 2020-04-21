@@ -5,6 +5,8 @@ from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.generic import TemplateView, ListView
+from django.db.models import Q 
 
 from .models import Subnets, Hosts_Allow
 
@@ -171,5 +173,21 @@ def generate_allowed_hosts(request):
 			result.write('host ' + str(item.hostname) + \
 				' { hardware ethernet ' + str(item.mac_addr) + ';' \
 				' fixed-address ' + str(item.ip_addr) + '; }' + '\n')
-	restart_dhcpd(conf_path, conf_path_bkp)
+	restart_dhcpd(conf_path, conf_path_bkp)	
 	return redirect('/admin/iptv_dhcpmanager/hosts_allow/')
+
+class SearchHostResultsView(ListView):
+	model = Hosts_Allow
+	template_name = 'iptv_dhcpmanager/search_host_results.html'
+
+	def get_queryset(self):
+		query = self.request.GET.get('q')
+		object_list =  Hosts_Allow.objects.filter(
+			Q(hostname__icontains=query) |
+			Q(mac_addr__icontains=query) |
+			Q(ip_addr__icontains=query) |
+			Q(description__icontains=query)
+		)
+
+		return object_list
+

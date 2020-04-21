@@ -10,4 +10,5 @@ urlpatterns = [
     path('upload_csv/', views.upload_csv, name='upload_csv'),
     path('generate_subnets/', views.generate_subnets, name='generate_subnets'),
     path('generate_allowed_hosts/', views.generate_allowed_hosts, name='generate_allowed_hosts'),
+    path('search_host/', views.SearchHostResultsView.as_view(), name='search_host'),    
 ]

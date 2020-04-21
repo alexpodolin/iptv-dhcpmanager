@@ -27,23 +27,9 @@
             </li>
 		</ul>
 	</div>
-
-	<form action="{% url 'search_host' %}" method="get" class="d-flex justify-content-end">
-		<div class="form-group">
-		<input name="q" type="text" class="form-control" placeholder="Поиск...">
-		</div>
-	</form>
-
 </nav>
 
-
 <div class="container-fluid table-responsive-lg table-cust">
-	<!-- <div class="d-flex flex-row justify-content-between">
-		<p>Доступные/Разрешенные хосты</p>
-		<button type="button" class="btn btn-light btn-sm">Сгенерировать конфиг</button>
-	</div> -->
-
-	<div class="d-flex justify-content-end">Всего хостов в базе данных: {{ hosts_allow_count }}</div>
 
 	<table class="table table-hover table-cust">
 		<thead>
@@ -55,7 +41,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{% for host in hosts_allow %}
+			{% for host in object_list %}
 				<tr>
 					<td scope="col">{{ host.hostname}}</td>
 					<td scope="col">{{ host.mac_addr}}</td>
@@ -65,27 +51,7 @@
 			{% endfor %}
 		</tbody>
 	</table>
-
-	<div class="pagination cust-pagination">
-		<span class="step-links cust-step-links">
-	        {% if hosts_allow.has_previous %}
-	            <a href="?page=1">&laquo; Первая</a>
-	            <a href="?page={{ hosts_allow.previous_page_number }}">Предыдущая</a>
-	        {% endif %}
-
-	        <span class="current">
-	            Страница {{ hosts_allow.number }} из {{ hosts_allow.paginator.num_pages }}.
-	        </span>
-
-	        {% if hosts_allow.has_next %}
-	            <a href="?page={{ hosts_allow.next_page_number }}">Следующая</a>
-	            <a href="?page={{ hosts_allow.paginator.num_pages }}">Последняя &raquo;</a>
-	        {% endif %}
-	    </span>
-	</div>	
 </div>
 
 </body>
 </html>
-
-
