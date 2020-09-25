@@ -2,3 +2,5 @@ venv
 run
 __pycache__
 settings.py
+*.sublime*
+ftpsync.settings

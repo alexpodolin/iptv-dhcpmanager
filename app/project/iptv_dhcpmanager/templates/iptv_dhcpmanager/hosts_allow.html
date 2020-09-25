@@ -1,9 +1,10 @@
 {% include 'iptv_dhcpmanager/base.html' %}
+{% load static %}
 
 <body>
 <nav class="navbar navbar-expand-md navbar-light bg-light">
-	<a class="navbar-brand" href="#">
-		<img src="img/logo.png" width="100" height="45" alt="logo">
+	<a class="navbar-brand" href="http://www.sats.spb.ru">
+		<img src="{% static 'img/logo.png' %}" width="100" height="45" alt="logo">
 	</a>
 
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -13,21 +14,38 @@
 	<div class="collapse navbar-collapse" id="collapsibleNavbar">
 		<ul class="navbar-nav">
 			<li class="nav-item">
-				<a class="nav-link" href="subnets.html">Подсети</a>
+				<a class="nav-link" href="{% url 'subnets' %}">Подсети</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="hosts_allow.html">Разрешенные адреса</a>
+				<a class="nav-link" href="{% url 'hosts_allow' %}">Разрешенные адреса</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="admin.html">Админка</a>
+				<a class="nav-link" href="/admin/">Админка</a>
 			</li>
+			<li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Выход</a>
+            </li>
 		</ul>
 	</div>
+
+	<form action="{% url 'search_host' %}" method="get" class="d-flex justify-content-end">
+		<div class="form-group">
+		<input name="q" type="text" class="form-control" placeholder="Поиск...">
+		</div>
+	</form>
+
 </nav>
 
+
 <div class="container-fluid table-responsive-lg table-cust">
-	<p>Доступные/Разрешенные хосты</p>
-	<table class="table table-hover ">
+	<!-- <div class="d-flex flex-row justify-content-between">
+		<p>Доступные/Разрешенные хосты</p>
+		<button type="button" class="btn btn-light btn-sm">Сгенерировать конфиг</button>
+	</div> -->
+
+	<div class="d-flex justify-content-end">Всего хостов в базе данных: {{ hosts_allow_count }}</div>
+
+	<table class="table table-hover table-cust">
 		<thead>
 			<tr>
 				<th scope="col">Имя хоста</th>
@@ -37,14 +55,34 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>SB26002643</td>
-				<td>E0:D9:E3:97:05:AB</td>
-				<td>10.23.2.2</td>
-				<td>что-то в Невской ратуше</td>
-			</tr>
+			{% for host in hosts_allow %}
+				<tr>
+					<td scope="col">{{ host.hostname}}</td>
+					<td scope="col">{{ host.mac_addr}}</td>
+					<td scope="col">{{ host.ip_addr}}</td>
+					<td scope="col">{{ host.description | default_if_none:""}}</td>
+				</tr>
+			{% endfor %}
 		</tbody>
 	</table>
+
+	<div class="pagination cust-pagination">
+		<span class="step-links cust-step-links">
+	        {% if hosts_allow.has_previous %}
+	            <a href="?page=1">&laquo; Первая</a>
+	            <a href="?page={{ hosts_allow.previous_page_number }}">Предыдущая</a>
+	        {% endif %}
+
+	        <span class="current">
+	            Страница {{ hosts_allow.number }} из {{ hosts_allow.paginator.num_pages }}.
+	        </span>
+
+	        {% if hosts_allow.has_next %}
+	            <a href="?page={{ hosts_allow.next_page_number }}">Следующая</a>
+	            <a href="?page={{ hosts_allow.paginator.num_pages }}">Последняя &raquo;</a>
+	        {% endif %}
+	    </span>
+	</div>	
 </div>
 
 </body>

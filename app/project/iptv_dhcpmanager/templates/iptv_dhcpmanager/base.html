@@ -1,5 +1,6 @@
 {% load static %}
 
+{% block head %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -15,4 +16,7 @@
     <link rel="stylesheet" href="{% static 'css/custom.css' %}" media="all">
     <script src="{% static 'js/jquery-3.4.1.slim.js' %}"></script>
     <script src="{% static 'js/bootstrap.js' %}"></script>
+    <link rel="icon" href="{% static 'icon/favicon.ico' %}" type="image/png">
 </head>
+{% endblock %}
+

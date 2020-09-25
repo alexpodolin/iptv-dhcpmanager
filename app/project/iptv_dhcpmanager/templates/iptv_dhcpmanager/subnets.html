@@ -1,9 +1,10 @@
 {% include 'iptv_dhcpmanager/base.html' %}
+{% load static %}
 
 <body>
 <nav class="navbar navbar-expand-md navbar-light bg-light">
-	<a class="navbar-brand" href="#">
-		<img src="img/logo.png" width="100" height="45" alt="logo">
+	<a class="navbar-brand" href="http://www.sats.spb.ru">
+		<img src="{% static 'img/logo.png' %}" width="100" height="45" alt="logo">
 	</a>
 
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -13,48 +14,58 @@
 	<div class="collapse navbar-collapse" id="collapsibleNavbar">
 		<ul class="navbar-nav">
 			<li class="nav-item">
-				<a class="nav-link" href="subnets.html">Подсети</a>
+				<a class="nav-link" href="{% url 'subnets' %}">Подсети</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="hosts_allow.html">Разрешенные адреса</a>
+				<a class="nav-link" href="{% url 'hosts_allow' %}">Разрешенные адреса</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="admin.html">Админка</a>
+				<a class="nav-link" href="/admin/">Админка</a>
 			</li>
+			<li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Выход</a>
+            </li>
 		</ul>
 	</div>
 </nav>
 
+
 <div class="container-fluid table-responsive-lg table-cust">
-	<p>Сконфигурированные подсети</p>
-	<table class="table table-hover ">
+	<!-- <div class="d-flex flex-row justify-content-between">
+		<p>Сконфигурированные подсети</p>
+		<button type="button" class="btn btn-light btn-sm">Сгенерировать конфиг</button>
+	</div> -->
+	
+	<table class="table table-hover table-cust">
 		<thead>
 			<tr>
 				<th scope="col">Описание</th>
 				<th scope="col">Ip подсети</th>
 				<th scope="col">Маска подсети</th>
 				<th scope="col">Шлюз</th>
-				<th scope="col">Начальный ip</th>
-				<th scope="col">Конечный ip</th>
 				<th scope="col">Broadcast</th>
+				<th scope="col">Начальный ip</th>
+				<th scope="col">Конечный ip</th>				
 				<th scope="col">DNS суффикс</th>
-				<th scope="col">DNS сервер осн.</th>
-				<th scope="col">DNS сервер рез.</th>
+				<th scope="col">DNS осн. сервер</th>
+				<th scope="col">DNS рез. сервер</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>[EMTS4951]-пр. Елизарова, 31к3 vlan 3952</td>
-				<td>10.23.2.0</td>
-				<td>255.255.254.0</td>
-				<td>10.23.2.1</td>
-				<td>10.23.2.2</td>
-				<td>10.23.3.254</td>
-				<td>10.23.3.255</td>
-				<td>eltex.local</td>
-				<td>ns1.eltex.local</td>
-				<td>ns2.eltex.local</td>
-			</tr>
+			{% for subnet in subnets_list %}
+				<tr>
+					<td>{{ subnet.description | default_if_none:"" }}</td>
+					<td>{{ subnet.ip_subnet }}</td>
+					<td>{{ subnet.mask_subnet }}</td>
+					<td>{{ subnet.gw_subnet }}</td>
+					<td>{{ subnet.ip_broadcast }}</td>
+					<td>{{ subnet.ip_start }}</td>
+					<td>{{ subnet.ip_end }}</td>
+					<td>{{ subnet.dns_prefix }}</td>
+					<td>{{ subnet.dns_main }}</td>
+					<td>{{ subnet.dns_res | default_if_none:"" }}</td>
+				</tr>
+			{% endfor %}
 		</tbody>
 	</table>
 </div>

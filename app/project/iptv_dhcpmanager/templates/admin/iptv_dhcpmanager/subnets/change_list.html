@@ -1,0 +1,15 @@
+{% extends "admin/change_list.html" %}
+{% load i18n admin_urls static admin_list %}
+
+{% block object-tools %}
+  
+  <form action="/generate_subnets/" method="POST" enctype="multipart/form-data" class="cust_add-form">
+    {% csrf_token %}
+      {# <label for="gen_conf_file"></label>#}
+       {#<input type="submit" name="gen_conf_file">   #}
+      	{#<small>Формат файла: hostname;mac_addr;ip_addr;description</small> #}
+    <button type="submit" class="cust-admin-btn" title="Генерация списка доступных подсетей">Сгенерировать конфигурацию подсетей</button>
+    </form>
+
+  {{ block.super }}
+{% endblock %}
