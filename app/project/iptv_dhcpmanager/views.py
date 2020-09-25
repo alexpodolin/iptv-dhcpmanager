@@ -150,10 +150,15 @@ def generate_subnets(request):
 			result.write('  option broadcast-address\t' + item.ip_broadcast + ';' +'\n')
 			result.write('  option domain-name\t\t"' + item.dns_prefix +'"' + ';' +'\n')
 			if item.dns_res == None:
+<<<<<<< HEAD
 			    item.dns_res = ''
 			    result.write('  option domain-name-servers\t' + item.dns_main + item.dns_res + ';' +'\n'*2)
 			else:
 			     result.write('  option domain-name-servers\t' + item.dns_main + ', ' + item.dns_res + ';' +'\n'*2)
+=======
+				item.dns_res = ''
+			result.write('  option domain-name-servers\t' + item.dns_main + item.dns_res + ';' +'\n'*2)
+>>>>>>> c9ea7f663d31032ec8e4e88866935b1c29f78819
 			result.write('  pool {' + '\n')
 			result.write('    deny\tunknown-clients;' + '\n')
 			result.write('    range\t' + item.ip_start + ' ' + item.ip_end + ';' +'\n')

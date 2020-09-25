@@ -1,6 +1,14 @@
 venv
 run
+uwsgi.ini
+requirements.txt 
 __pycache__
 settings.py
+<<<<<<< HEAD
 *.sublime*
 ftpsync.settings
+=======
+*.swp
+*.pyc
+*.pyo
+>>>>>>> c9ea7f663d31032ec8e4e88866935b1c29f78819

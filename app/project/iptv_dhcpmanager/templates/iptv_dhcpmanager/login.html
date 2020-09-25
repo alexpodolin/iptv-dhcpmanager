@@ -1,3 +1,4 @@
+<<<<<<< HEAD:app/project/iptv_dhcpmanager/templates/iptv_dhcpmanager/login.html
 {% include 'iptv_dhcpmanager/base.html' %}
 
 
@@ -33,3 +34,40 @@
 </html>
 
 
+=======
+{% include 'iptv_dhcpmanager/base.html' %}
+
+
+<form class="d-flex justify-content-center container form-login-cust" action="/auth/" method="POST">
+	{% csrf_token %}
+	<fieldset class="fieldset-cust">
+		<legend class="form-legend">Управление ip подсетями системы iptv</legend>
+		<div class="form-group">		
+			<label for="loginInput" class="d-flex justify-content-center">Логин</label>
+			<input type="text" class="form-control" id="loginInput" aria-describedby="loginHelp" placeholder="Логин" name="form-login" required>
+			<small id="loginHelp" class="form-text text-muted">Доменная авторизация</small>		
+		</div>
+
+		<div class="form-group">		
+			<label for="PasswdInput" class="d-flex justify-content-center">Пароль</label>
+			<input type="password" class="form-control" id="PasswdInput" placeholder="Пароль" name="form-passwd" required>
+		</div>
+
+		{% if errors %}		
+			{% for err in errors %}
+				<span class="login-err-msg">{{ err }}</span>
+			{% endfor %}
+		{% endif %}
+
+<!-- 		<div class="form-group form-check">
+		    <input type="checkbox" class="form-check-input" id="сheckMe">
+		    <label class="form-check-label" for="сheckMe">Запомнить меня</label>
+  		</div> -->
+
+  		<button type="submit" class="btn btn-outline-primary btn-block">Вход</button>
+	</fieldset>
+</form>
+</html>
+
+
+>>>>>>> c9ea7f663d31032ec8e4e88866935b1c29f78819:app/project/iptv_dhcpmanager/templates/iptv_dhcpmanager/login.html
