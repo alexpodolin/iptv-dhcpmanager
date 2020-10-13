@@ -153,8 +153,8 @@ def generate_subnets(request):
 			    item.dns_res = ''
 			    result.write('  option domain-name-servers\t' + item.dns_main + item.dns_res + ';' +'\n'*2)
 			else:
-			     result.write('  option domain-name-servers\t' + item.dns_main + ', ' + item.dns_res + ';' +'\n'*2)
-				item.dns_res = ''
+			    result.write('  option domain-name-servers\t' + item.dns_main + ', ' + item.dns_res + ';' +'\n'*2)
+#				item.dns_res = ''
 			result.write('  option domain-name-servers\t' + item.dns_main + item.dns_res + ';' +'\n'*2)
 			result.write('  pool {' + '\n')
 			result.write('    deny\tunknown-clients;' + '\n')
