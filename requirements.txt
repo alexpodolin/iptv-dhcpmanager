@@ -19,7 +19,7 @@ openpyxl==3.0.3
 pyasn1==0.4.8
 pysqlite3==0.4.2
 pytz==2019.3
-PyYAML==5.3
+PyYAML==5.4
 six==1.14.0
 SQLite3Database==0.2.0
 sqlparse==0.3.0
