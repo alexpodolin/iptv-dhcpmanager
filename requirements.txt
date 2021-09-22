@@ -3,7 +3,7 @@ asgiref==3.2.3
 defusedxml==0.6.0
 diff-match-patch==20181111
 distlib==0.3.0
-Django==3.0.3
+Django==3.1.13
 django-macaddress==1.6.0
 et-xmlfile==1.0.1
 filelock==3.0.12
